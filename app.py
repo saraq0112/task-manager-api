@@ -57,6 +57,27 @@ class Task(db.Model):
 
 
 # ---------------------------------------------------------------
+# Home Route (so visiting the base URL shows something useful
+# instead of a "Not Found" error)
+# ---------------------------------------------------------------
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({
+        "message": "Task Manager REST API is running.",
+        "note": "This is a backend API with no visual interface. Use Postman or curl to interact with the endpoints below.",
+        "endpoints": {
+            "POST /signup": "Create a new user account (body: username, password)",
+            "POST /login": "Log in and receive a JWT access token (body: username, password)",
+            "GET /tasks": "Get all tasks for the logged-in user (requires Bearer token)",
+            "POST /tasks": "Create a new task (requires Bearer token, body: title, description)",
+            "PUT /tasks/<id>": "Update a task (requires Bearer token)",
+            "DELETE /tasks/<id>": "Delete a task (requires Bearer token)",
+        },
+        "github": "https://github.com/saraq0112/task-manager-api",
+    }), 200
+
+
+# ---------------------------------------------------------------
 # Auth Routes
 # ---------------------------------------------------------------
 @app.route("/signup", methods=["POST"])
